@@ -19,7 +19,7 @@ in vec3 LightPos;       //光源的坐标
 void main()
 {
     //环境光
-    vec3 ambient = lightColor * material.ambient;
+    vec3 ambient = vec3(0.1) * lightColor * material.ambient;
     //漫反射光
     vec3 norm = normalize(Normal);  //标准化法向量
     vec3 lightDir = normalize(LightPos - FragPos); //标准化 光与片段位置向量差（光线方向）
