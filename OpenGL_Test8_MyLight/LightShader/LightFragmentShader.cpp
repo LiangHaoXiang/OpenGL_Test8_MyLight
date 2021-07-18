@@ -1,13 +1,13 @@
 #version 330 core
 //材质属性结构
 struct Material {
-    vec3 ambient;       //环境光
-    vec3 diffuse;       //漫反射
+    sampler2D diffuse;       //漫反射
     vec3 specular;      //镜面反射
     float shininess;    //反光度
 };
 
 uniform Material material;  //材质
+in vec2 TexCoords;
 
 //光源属性结构
 struct Light {
@@ -28,12 +28,12 @@ in vec3 LightPos;       //光源的坐标
 void main()
 {
     //环境光
-    vec3 ambient = light.ambient * material.ambient;
+    vec3 ambient = light.ambient * vec3(texture(material.diffuse, TexCoords));
     //漫反射光
     vec3 norm = normalize(Normal);  //标准化法向量
     vec3 lightDir = normalize(LightPos - FragPos); //标准化 光与片段位置向量差（光线方向）
     float diff = max(dot(norm, lightDir), 0.0); //向量点乘 得到cos余弦值
-    vec3 diffuse = light.diffuse * (diff * material.diffuse);
+    vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, TexCoords));
     //镜面反射光
     vec3 viewDir = normalize(-FragPos);    //观察方向
     vec3 reflectDir = reflect(-lightDir, norm);     //反射光方向
