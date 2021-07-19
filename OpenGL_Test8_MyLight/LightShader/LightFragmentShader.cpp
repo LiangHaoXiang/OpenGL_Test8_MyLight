@@ -2,7 +2,7 @@
 //材质属性结构
 struct Material {
     sampler2D diffuse;       //漫反射
-    vec3 specular;      //镜面反射
+    sampler2D specular;      //镜面反射
     float shininess;    //反光度
 };
 
@@ -39,7 +39,7 @@ void main()
     vec3 reflectDir = reflect(-lightDir, norm);     //反射光方向
     float specularStrength = 0.5;   //镜面强度
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);   //pow是次幂函数：x的y次方
-    vec3 specular = light.specular * (spec * material.specular);
+    vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
     //各种光的分量相加
     vec3 result = ambient + diffuse + specular;
     FragColor = vec4(result, 1.0);
