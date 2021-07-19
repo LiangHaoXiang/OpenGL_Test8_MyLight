@@ -42,8 +42,8 @@ void main()
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);   //pow是次幂函数：x的y次方
     vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
     
-    vec4 emission = texture(material.emission, TexCoords);
+    vec3 emission = vec3(texture(material.emission, TexCoords));
     //各种光的分量相加
-    vec3 result = ambient + diffuse + specular;
-    FragColor = mix(vec4(result, 1.0), emission, 0.5);
+    vec3 result = ambient + diffuse + specular + emission;
+    FragColor = vec4(result, 1.0);
 }
