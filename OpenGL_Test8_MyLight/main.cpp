@@ -206,14 +206,15 @@ int main()
 
         //模型矩阵
         mat4 model = mat4(1);
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 10; i++) {
+            model = mat4(1);
             model = translate(model, cubePositions[i]);
-//            if(i % 3 == 0) {
-//                model = rotate(model, (float)glfwGetTime() * radians(5.0f*i+10.0f), vec3(0.5f, 1.0f, 0.0f));
-//            }
-//            else {
+            if(i % 3 == 0) {
+                model = rotate(model, (float)glfwGetTime() * radians(5.0f*i+10.0f), vec3(0.5f, 1.0f, 0.0f));
+            }
+            else {
                 model = rotate(model, radians(50.0f), vec3(0.5f, 1.0f, 0.0f));
-//            }
+            }
             
             lightingShader.use();
             //设置材质
