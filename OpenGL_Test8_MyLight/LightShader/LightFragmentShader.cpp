@@ -26,6 +26,9 @@ in vec3 FragPos;        //片段的坐标位置
 in vec3 Normal;         //片段的法向量
 in vec3 LightPos;       //光源的坐标
 
+uniform float matrixlight;  //放射光贴图光强度
+uniform float matrixmove;   //放射光贴图纹理位移
+
 void main()
 {
     //环境光
@@ -42,7 +45,7 @@ void main()
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);   //pow是次幂函数：x的y次方
     vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
     
-    vec3 emission = vec3(texture(material.emission, TexCoords));
+    vec3 emission = matrixlight * vec3(texture(material.emission, vec2(TexCoords.x, TexCoords.y + matrixmove)));
     //各种光的分量相加
     vec3 result = ambient + diffuse + specular + emission;
     FragColor = vec4(result, 1.0);

@@ -222,6 +222,8 @@ int main()
             lightingShader.setInt("material.specular", 1);
             lightingShader.setInt("material.emission", 2);
             lightingShader.setFloat("material.shininess", shininess);
+            lightingShader.setFloat("matrixlight", (1.0 + sin(glfwGetTime())) / 2 + 0.5);
+            lightingShader.setFloat("matrixmove", glfwGetTime());
             //设置光源
             lightingShader.setVec3("lightPos", lightPos);
             lightingShader.setVec3("light.ambient", vec3(0.7f));
