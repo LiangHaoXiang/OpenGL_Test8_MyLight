@@ -173,6 +173,7 @@ int main()
     
     unsigned int diffuseMap = loadTexture("/Users/haoxiangliang/Desktop/未命名文件夹/container2.png");
     unsigned int specularMap = loadTexture("/Users/haoxiangliang/Desktop/未命名文件夹/container2_specular.png");
+    unsigned int emissionMap = loadTexture("/Users/haoxiangliang/Desktop/未命名文件夹/matrix.jpg");
 
     glfwSetKeyCallback(window, key_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
@@ -219,10 +220,11 @@ int main()
             float shininess = 0.5f * 128.0f;
             lightingShader.setInt("material.diffuse", 0);
             lightingShader.setInt("material.specular", 1);
+            lightingShader.setInt("material.emission", 2);
             lightingShader.setFloat("material.shininess", shininess);
             //设置光源
             lightingShader.setVec3("lightPos", lightPos);
-            lightingShader.setVec3("light.ambient", vec3(1.0f));
+            lightingShader.setVec3("light.ambient", vec3(0.7f));
             lightingShader.setVec3("light.diffuse", vec3(1.0f)); // 将光照调暗了一些以搭配场景
             lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
             
@@ -233,6 +235,8 @@ int main()
             glBindTexture(GL_TEXTURE_2D, diffuseMap);
             glActiveTexture(GL_TEXTURE1);
             glBindTexture(GL_TEXTURE_2D, specularMap);
+            glActiveTexture(GL_TEXTURE2);
+            glBindTexture(GL_TEXTURE_2D, emissionMap);
             
             glBindVertexArray(cubeVAO);
             glDrawArrays(GL_TRIANGLES, 0, 36);//绘制被照射立方体
